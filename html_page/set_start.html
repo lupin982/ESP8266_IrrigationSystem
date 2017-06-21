@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>Set Start</title>
+<style>
+body
+{
+   background-color: #FFFFFF;
+   color: #000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   line-height: 1.1875;
+   margin: 0;
+   padding: 0;
+}
+a
+{
+   color: #0000FF;
+   text-decoration: underline;
+}
+a:visited
+{
+   color: #800080;
+}
+a:active
+{
+   color: #FF0000;
+}
+a:hover
+{
+   color: #0000FF;
+   text-decoration: underline;
+}
+#wb_Form1
+{
+   background-color: #F4F4F4;
+   background-image: none;
+   border: 0px #000000 solid;
+}
+#l_statMinuti
+{
+   border: 0px #CCCCCC solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: transparent;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#le_startMinuti
+{
+   border: 1px #CCCCCC solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #FFFFFF;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#le_startMinuti:focus
+{
+   border-color: #66AFE9;
+   -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102, 175, 233, 0.60);
+   -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102, 175, 233, 0.60);
+   box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102, 175, 233, 0.60);
+   outline: 0;
+}
+#l_startOre
+{
+   border: 0px #CCCCCC solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: transparent;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#le_startOre
+{
+   border: 1px #CCCCCC solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #FFFFFF;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#le_startOre:focus
+{
+   border-color: #66AFE9;
+   -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102, 175, 233, 0.60);
+   -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102, 175, 233, 0.60);
+   box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102, 175, 233, 0.60);
+   outline: 0;
+}
+#l_durata
+{
+   border: 0px #CCCCCC solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: transparent;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#le_durata
+{
+   border: 1px #CCCCCC solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #FFFFFF;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#le_durata:focus
+{
+   border-color: #66AFE9;
+   -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102, 175, 233, 0.60);
+   -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102, 175, 233, 0.60);
+   box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102, 175, 233, 0.60);
+   outline: 0;
+}
+#b_set
+{
+   border: 1px #2E6DA4 solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #3370B7;
+   background-image: none;
+   color: #FFFFFF;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+}
+#b_back
+{
+   border: 1px #2E6DA4 solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #3370B7;
+   background-image: none;
+   color: #FFFFFF;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+}
+</style>
+<SCRIPT TYPE='text/JavaScript'>
+    function validateHhMm(inputField) {
+        var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(inputField.value);
+
+        if (isValid) {
+            inputField.style.backgroundColor = '#bfa';
+        } else {
+            inputField.style.backgroundColor = '#fba';
+        }
+
+        return isValid;
+    }
+	function validateHh(inputField) {
+		var x = parseInt(inputField.value, 10);
+		if(x >= 0 && x <= 24)
+		{
+			document.getElementById('b_set').disabled = false; 
+			return true;
+		}
+		else
+		{
+			document.getElementById('b_set').disabled = true;
+			alert('Inserisci correttamente start ore');
+			return false;
+		}
+	}
+	function validateMm(inputField) {
+		var x = parseInt(inputField.value, 10);
+		if(x >= 0 && x <= 60)
+		{
+			document.getElementById('b_set').disabled = false; 
+			return true;
+		}
+		else
+		{
+			document.getElementById('b_set').disabled = true; 
+			alert('Inserisci correttamente start minuti');
+			return false;
+		}
+	}
+		function validateDurata(inputField) {
+		var x = parseInt(inputField.value, 10);
+		if(x > 0 && x <= 360)
+		{
+			document.getElementById('b_set').disabled = false; 
+			return true;
+		}
+		else
+		{
+			document.getElementById('b_set').disabled = true; 
+			alert('Inserisci correttamente durata');
+			return false;
+		}
+	}
+
+</SCRIPT>
+</head>
+<body>
+<div id='wb_Form1' style='position:absolute;left:0px;top:0px;width:316px;height:160px;z-index:8;'>
+<form name='set_start' method='post' action='' enctype='text/plain' id='Form1'>
+<label for='le_startMinuti' id='l_statMinuti' style='position:absolute;left:13px;top:50px;width:73px;height:17px;line-height:17px;z-index:0;'>Start Minuti</label>
+<input type='text' id='le_startOre' style='position:absolute;left:96px;top:17px;width:190px;height:15px;line-height:15px;z-index:1;' name='le_startOre' value='' spellcheck='false' onchange='validateHh(this);'>
+<label for='le_durata' id='l_durata' style='position:absolute;left:10px;top:82px;width:73px;height:17px;line-height:17px;z-index:2;'>Durata (min)</label>
+<input type='text' id='le_durata' style='position:absolute;left:96px;top:82px;width:190px;height:15px;line-height:15px;z-index:3;' name='le_durata' value='' spellcheck='false' onchange='validateHh(this);'>
+<input type='text' id='le_startMinuti' style='position:absolute;left:96px;top:49px;width:190px;height:15px;line-height:15px;z-index:4;' name='le_startMinuti' value='' spellcheck='false' onchange='validateMm(this);'>
+<input type='submit' id='b_set' name='' value='Set' style='position:absolute;left:202px;top:121px;width:97px;height:26px;z-index:5;'>
+<label for='le_startOre' id='l_startOre' style='position:absolute;left:17px;top:16px;width:73px;height:17px;line-height:17px;z-index:6;'>Start Ore</label>
+</form>
+</div>
+<a href='/index'><input type='button' id='b_back' name='' value='Back' style='position:absolute;left:12px;top:169px;width:97px;height:26px;z-index:9;'></a>
+</body>
+</html>

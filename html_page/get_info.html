@@ -1,0 +1,262 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>Get Info</title>
+<style>
+body
+{
+   background-color: #FFFFFF;
+   color: #000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   line-height: 1.1875;
+   margin: 0;
+   padding: 0;
+}
+a
+{
+   color: #0000FF;
+   text-decoration: underline;
+}
+a:visited
+{
+   color: #800080;
+}
+a:active
+{
+   color: #FF0000;
+}
+a:hover
+{
+   color: #0000FF;
+   text-decoration: underline;
+}
+#wb_f_getInfo
+{
+   background-color: #F0FFFF;
+   background-image: none;
+   border: 0px #000000 solid;
+}
+#l_startOre
+{
+   border: 0px #CCCCCC solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #FAFAD2;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#wb_t_startOre
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px #C0C0C0 solid;
+   padding: 0;
+   margin: 0;
+   text-align: left;
+}
+#wb_t_startOre div
+{
+   text-align: left;
+}
+#l_startMinuti
+{
+   border: 0px #CCCCCC solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #FFFACD;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#wb_t_startMinuti
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px #C0C0C0 solid;
+   padding: 0;
+   margin: 0;
+   text-align: left;
+}
+#wb_t_startMinuti div
+{
+   text-align: left;
+}
+#wb_t_durata
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px #C0C0C0 solid;
+   padding: 0;
+   margin: 0;
+   text-align: left;
+}
+#wb_t_durata div
+{
+   text-align: left;
+}
+#l_durata
+{
+   border: 0px #FFFFFF solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #FFA07A;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#l_currentState
+{
+   border: 0px #CCCCCC solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #00FF7F;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#wb_t_currentState
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px #C0C0C0 solid;
+   padding: 0;
+   margin: 0;
+   text-align: left;
+}
+#wb_t_currentState div
+{
+   text-align: left;
+}
+#b_back
+{
+   border: 1px #2E6DA4 solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #3370B7;
+   background-image: none;
+   color: #FFFFFF;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+}
+#Line1
+{
+   color: #708090;
+   background-color: #708090;
+   border-width: 0;
+   margin: 0;
+   padding: 0;
+}
+#l_curretnTime
+{
+   border: 0px #CCCCCC solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #00FF7F;
+   background-image: none;
+   color :#000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+   padding: 4px 4px 4px 4px;
+   text-align: left;
+   vertical-align: middle;
+}
+#wb_t_currentTime
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px #C0C0C0 solid;
+   padding: 0;
+   margin: 0;
+   text-align: left;
+}
+#wb_t_currentTime div
+{
+   text-align: left;
+}
+#b_updateInfo
+{
+   border: 1px #2E6DA4 solid;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+   background-color: #3370B7;
+   background-image: none;
+   color: #FFFFFF;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 13px;
+}
+</style>
+</head>
+<body>
+<div id='wb_f_getInfo' style='position:absolute;left:0px;top:0px;width:256px;height:204px;z-index:11;'>
+<form name='Form1' method='post' action='' enctype='text/plain' id='f_getInfo'>
+<label for='' id='l_startOre' style='position:absolute;left:8px;top:4px;width:83px;height:16px;line-height:16px;z-index:0;'>Start Ore:</label>
+<label for='l_startOre' id='l_startMinuti' style='position:absolute;left:8px;top:32px;width:82px;height:16px;line-height:16px;z-index:1;'>Start Minuti:</label>
+<div id='wb_t_startOre' style='position:absolute;left:103px;top:8px;width:150px;height:21px;z-index:2;'>
+<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>
+<div>N/A</div>
+</div>
+</div>
+<div id='wb_t_startMinuti' style='position:absolute;left:102px;top:36px;width:150px;height:17px;z-index:3;'>
+<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>
+<div>N/A</div>
+</div>
+</div>
+<div id='wb_t_durata' style='position:absolute;left:103px;top:77px;width:149px;height:19px;z-index:4;'>
+<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>
+<div>N/A</div>
+</div>
+</div>
+<label for='l_startOre' id='l_currentState' style='position:absolute;left:6px;top:129px;width:84px;height:16px;line-height:16px;z-index:5;'>Current State:</label>
+<div id='wb_t_currentState' style='position:absolute;left:103px;top:133px;width:149px;height:19px;z-index:6;'>
+<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>
+<div>N/A</div>
+</div>
+</div>
+<label for='l_startOre' id='l_durata' style='position:absolute;left:6px;top:73px;width:84px;height:16px;line-height:16px;z-index:7;'>Durata (min):</label>
+<label for='l_startOre' id='l_curretnTime' style='position:absolute;left:6px;top:168px;width:84px;height:16px;line-height:16px;z-index:8;'>Current Time:</label>
+<div id='wb_t_currentTime' style='position:absolute;left:103px;top:172px;width:149px;height:19px;z-index:9;'>
+<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>
+<div>N/A</div>
+</div>
+</div>
+</form>
+</div>
+<a href='/index\'><input type='button' id='b_back' name='' value='Back' style='position:absolute;left:7px;top:217px;width:97px;height:26px;z-index:12;'></a>
+<hr id='Line1' style='position:absolute;left:5px;top:111px;width:251px;height:4px;z-index:13;'>
+<a href='/getInfo\'><input type='button' id='b_updateInfo' name='' value='Update Info' style='position:absolute;left:154px;top:217px;width:97px;height:26px;z-index:14;'>
+</body>
+</html>

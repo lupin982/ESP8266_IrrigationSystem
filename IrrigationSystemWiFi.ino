@@ -26,13 +26,14 @@ ESP8266WebServer server(80); // Start server on port 80 (default for a web-brows
 // To access server from the outsid of a WiFi network e.g. ESP8266WebServer server(8266); and then add a rule on your Router that forwards a
 // connection request to http://your_network_ip_address:8266 to port 8266 and view your ESP server from anywhere.
 // Example http://g6ejd.uk.to:8266 will be directed to http://192.168.0.40:8266 or whatever IP address your router gives to this server
-String Argument_Name, Clients_Response;
+//String Argument_Name, Clients_Response;
 
 //Global variable
 const int relayPin = 6;
 // Use pin 2 as wake up pin and change state pin
 
 volatile int state = STATE_ON;
+String 		 state_string = "";
 
 #ifdef STANDALONE
   RTC_Millis RTC;
@@ -131,21 +132,25 @@ void loop()
     if((start_time_min < current_time_min) && ((start_time_min + duration_min) > current_time_min))
     {
       digitalWrite(relayPin, LOW);
+      state_string = "STATE_ON - relay off";
+
      //Serial.println("STATE ON -- relay off");
     }
     else
     {
       digitalWrite(relayPin, HIGH);
+      state_string = "STATE_ON - relay on";
       //Serial.println("STATE ON -- relay on");
-
     }
   break;
   case STATE_OFF:
     digitalWrite(relayPin, LOW);
+	state_string = "STATE_OFF";
     //Serial.println("STATE OFF -- relay off");
   break;
   case STATE_FORCED_ON:
       digitalWrite(relayPin, HIGH);
+      state_string = "STATE_FORCED_ON";
       //Serial.println("STATE FORCED ON -- relay on");
   default:
     digitalWrite(relayPin, LOW);
@@ -156,14 +161,13 @@ void loop()
 
 }
 
-
-
-
-
+////////////////////////
+// page_get_info()
+////////////////////////
 void page_get_info()
 {
 
-Serial.println("get info");
+  Serial.println("get info");
   String page_out = "";
   page_out += "<!doctype html>";
   page_out += "<html>";
@@ -410,7 +414,7 @@ Serial.println("get info");
   page_out += "<label for='l_startOre' id='l_currentState' style='position:absolute;left:6px;top:129px;width:84px;height:16px;line-height:16px;z-index:5;'>Current State:</label>";
   page_out += "<div id='wb_t_currentState' style='position:absolute;left:103px;top:133px;width:149px;height:19px;z-index:6;'>";
   page_out += "<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>";
-  page_out += "<div>N/A</div>";
+  page_out += "<div>" + state_string + "</div>";
   page_out += "</div>";
   page_out += "</div>";
   page_out += "<label for='l_startOre' id='l_durata' style='position:absolute;left:6px;top:73px;width:84px;height:16px;line-height:16px;z-index:7;'>Durata (min):</label>";
@@ -433,9 +437,9 @@ Serial.println("get info");
   state = STATE_ON;
 }
 
-
-
-
+////////////////////////
+// page_index()
+////////////////////////
 void page_index()
 {
 
@@ -519,7 +523,6 @@ void page_index()
   page_out += "</style>";
   page_out += "</head>";
   page_out += "<body>";
-  page_out += "<!--a href='http://www.quickandeasywebbuilder.com' target='_blank'><img src='images/builtwithqwb5.png' alt='Quick 'n Easy Web Builder' style='position:absolute;left:10px;top:10px;border-width:0;z-index:9999'></a-->";
   page_out += "<a href='/getInfo'><input type='button' id='pb_getInfo' name='' value='Get Info' style='position:absolute;left:8px;top:8px;width:188px;height:40px;z-index:1;'></a>";
   page_out += "<a href='/startManual'><input type='button' id='pb_startManual' name='' value='Start Manual' style='position:absolute;left:8px;top:56px;width:188px;height:40px;z-index:2;'></a>";
   page_out += "<a href='/setStart'><input type='button' id='pb_setStart' name='' value='Set Start' style='position:absolute;left:9px;top:104px;width:188px;height:40px;z-index:3;'></a>";
@@ -531,17 +534,13 @@ void page_index()
   state = STATE_ON;
 }
 
-
-
-
-
-
-
-
+////////////////////////
+// page_set_start()
+////////////////////////
 void page_set_start()
 {
 
-Serial.println("set start");
+  Serial.println("set start");
   String page_out = "";
 
   page_out += "<!doctype html>";
@@ -800,29 +799,30 @@ Serial.println("set start");
   { // Arguments were received
     for ( uint8_t i = 0; i < server.args(); i++ ) 
     {
-      Serial.print(server.argName(i)); // Display the argument
-      Argument_Name = server.argName(i);
-      if (server.argName(i) == "le_startOre") 
+	   String Argument_Name = server.argName(i);
+	   String client_response = server.arg(i);
+	   Serial.print(Argument_Name); // Display the argument
+      if (Argument_Name == "le_startOre") 
       {
         Serial.print(" Input received was: ");
-        Serial.println(server.arg(i));
+        Serial.println(client_response);
 
-        start_hour = server.arg(i).toInt();
+        start_hour = client_response.toInt();
       }
-      if (server.argName(i) == "le_startMinuti") 
+      if (Argument_Name == "le_startMinuti") 
       {
         Serial.print(" Input received was: ");
-        Serial.println(server.arg(i));
+        Serial.println(client_response);
 
-        start_minute = server.arg(i).toInt();
+        start_minute = client_response.toInt();
       }
-      if (server.argName(i) == "le_durata") 
+      if (Argument_Name == "le_durata") 
       {
         Serial.print(" Input received was: ");
-        Serial.println(server.arg(i));
+        Serial.println(client_response);
 
-        duration_hours = (server.arg(i).toInt()) / 60;
-        duration_minutes = (server.arg(i).toInt()) % 60;
+        duration_hours = (client_response.toInt()) / 60;
+        duration_minutes = (client_response.toInt()) % 60;
         
       }
     }
@@ -832,215 +832,221 @@ Serial.println("set start");
 }
 
 
-
-
-
-
-
-
-
+////////////////////////
+// page_start_manual()
+////////////////////////
 void page_start_manual()
 {
 
-Serial.println("set manual");
-  String page_out = "";
+	Serial.println("set manual");
+	String page_out = "";
 
-  page_out += "<!doctype html>";
-  page_out += "<html>";
-  page_out += "<head>";
-  page_out += "<meta charset='utf-8'>";
-  page_out += "<title>Start Manual</title>";
-  page_out += "<style>";
-  page_out += "body";
-  page_out += "{";
-  page_out += "   background-color: #FFFFFF;";
-  page_out += "   color: #000000;";
-  page_out += "   font-family: Arial;";
-  page_out += "   font-weight: normal;";
-  page_out += "   font-size: 13px;";
-  page_out += "   line-height: 1.1875;";
-  page_out += "   margin: 0;";
-  page_out += "   padding: 0;";
-  page_out += "}";
-  page_out += "a";
-  page_out += "{";
-  page_out += "   color: #0000FF;";
-  page_out += "   text-decoration: underline;";
-  page_out += "}";
-  page_out += "a:visited";
-  page_out += "{";
-  page_out += "   color: #800080;";
-  page_out += "}";
-  page_out += "a:active";
-  page_out += "{";
-  page_out += "   color: #FF0000;";
-  page_out += "}";
-  page_out += "a:hover";
-  page_out += "{";
-  page_out += "   color: #0000FF;";
-  page_out += "   text-decoration: underline;";
-  page_out += "}";
-  page_out += "#wb_Form1";
-  page_out += "{";
-  page_out += "   background-color: #F4F4F4;";
-  page_out += "   background-image: none;";
-  page_out += "   border: 0px #000000 solid;";
-  page_out += "}";
-  page_out += "#b_irrigationOn";
-  page_out += "{";
-  page_out += "   border: 1px #2E6DA4 solid;";
-  page_out += "   -moz-border-radius: 4px;";
-  page_out += "   -webkit-border-radius: 4px;";
-  page_out += "   border-radius: 4px;";
-  page_out += "   background-color: #3370B7;";
-  page_out += "   background-image: none;";
-  page_out += "   color: #FFFFFF;";
-  page_out += "   font-family: Arial;";
-  page_out += "   font-weight: normal;";
-  page_out += "   font-size: 13px;";
-  page_out += "}";
-  page_out += "#b_stopIrrigation";
-  page_out += "{";
-  page_out += "   border: 1px #2E6DA4 solid;";
-  page_out += "   -moz-border-radius: 4px;";
-  page_out += "   -webkit-border-radius: 4px;";
-  page_out += "   border-radius: 4px;";
-  page_out += "   background-color: #3370B7;";
-  page_out += "   background-image: none;";
-  page_out += "   color: #FFFFFF;";
-  page_out += "   font-family: Arial;";
-  page_out += "   font-weight: normal;";
-  page_out += "   font-size: 13px;";
-  page_out += "}";
-  page_out += "#l_irrigationState";
-  page_out += "{";
-  page_out += "   border: 0px #CCCCCC solid;";
-  page_out += "   -moz-border-radius: 4px;";
-  page_out += "   -webkit-border-radius: 4px;";
-  page_out += "   border-radius: 4px;";
-  page_out += "   background-color: #FFFFFF;";
-  page_out += "   background-image: none;";
-  page_out += "   color :#000000;";
-  page_out += "   font-family: Arial;";
-  page_out += "   font-weight: normal;";
-  page_out += "   font-size: 13px;";
-  page_out += "   padding: 4px 4px 4px 4px;";
-  page_out += "   text-align: left;";
-  page_out += "   vertical-align: middle;";
-  page_out += "}";
-  page_out += "#wb_t_irrigationState";
-  page_out += "{";
-  page_out += "   background-color: transparent;";
-  page_out += "   background-image: none;";
-  page_out += "   border: 0px #C0C0C0 solid;";
-  page_out += "   padding: 0;";
-  page_out += "   margin: 0;";
-  page_out += "   text-align: left;";
-  page_out += "}";
-  page_out += "#wb_t_irrigationState div";
-  page_out += "{";
-  page_out += "   text-align: left;";
-  page_out += "}";
-  page_out += "#l_currentTime";
-  page_out += "{";
-  page_out += "   border: 0px #CCCCCC solid;";
-  page_out += "   -moz-border-radius: 4px;";
-  page_out += "   -webkit-border-radius: 4px;";
-  page_out += "   border-radius: 4px;";
-  page_out += "   background-color: #FFFFFF;";
-  page_out += "   background-image: none;";
-  page_out += "   color :#000000;";
-  page_out += "   font-family: Arial;";
-  page_out += "   font-weight: normal;";
-  page_out += "   font-size: 13px;";
-  page_out += "   padding: 4px 4px 4px 4px;";
-  page_out += "   text-align: left;";
-  page_out += "   vertical-align: middle;";
-  page_out += "}";
-  page_out += "#wb_t_currentTime";
-  page_out += "{";
-  page_out += "   background-color: transparent;";
-  page_out += "   background-image: none;";
-  page_out += "   border: 0px #C0C0C0 solid;";
-  page_out += "   padding: 0;";
-  page_out += "   margin: 0;";
-  page_out += "   text-align: left;";
-  page_out += "}";
-  page_out += "#wb_t_currentTime div";
-  page_out += "{";
-  page_out += "   text-align: left;";
-  page_out += "}";
-  page_out += "#b_back";
-  page_out += "{";
-  page_out += "   border: 1px #2E6DA4 solid;";
-  page_out += "   -moz-border-radius: 4px;";
-  page_out += "   -webkit-border-radius: 4px;";
-  page_out += "   border-radius: 4px;";
-  page_out += "   background-color: #3370B7;";
-  page_out += "   background-image: none;";
-  page_out += "   color: #FFFFFF;";
-  page_out += "   font-family: Arial;";
-  page_out += "   font-weight: normal;";
-  page_out += "   font-size: 13px;";
-  page_out += "}";
-  page_out += "#b_update";
-  page_out += "{";
-  page_out += "   border: 1px #2E6DA4 solid;";
-  page_out += "   -moz-border-radius: 4px;";
-  page_out += "   -webkit-border-radius: 4px;";
-  page_out += "   border-radius: 4px;";
-  page_out += "   background-color: #3370B7;";
-  page_out += "   background-image: none;";
-  page_out += "   color: #FFFFFF;";
-  page_out += "   font-family: Arial;";
-  page_out += "   font-weight: normal;";
-  page_out += "   font-size: 13px;";
-  page_out += "}";
-  page_out += "</style>";
-  page_out += "</head>";
-  page_out += "<body>";
-  page_out += "<div id='wb_Form1' style='position:absolute;left:0px;top:0px;width:305px;height:208px;z-index:7;'>";
-  page_out += "<form name='Form1' method='post' action='' enctype='text/plain' id='Form1'>";
-  page_out += "<input type='button' id='b_irrigationOn' name='' value='Start Irrigation' style='position:absolute;left:69px;top:12px;width:151px;height:46px;z-index:0;'>";
-  page_out += "<input type='button' id='b_stopIrrigation' name='' value='Stop Irrigation' style='position:absolute;left:69px;top:77px;width:151px;height:46px;z-index:1;'>";
-  page_out += "<label for='' id='l_irrigationState' style='position:absolute;left:9px;top:141px;width:93px;height:19px;line-height:19px;z-index:2;'>Irrigation State:</label>";
-  page_out += "<div id='wb_t_irrigationState' style='position:absolute;left:118px;top:145px;width:181px;height:19px;z-index:3;'>";
-  page_out += "<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>";
-  page_out += "<div>N/A</div>";
-  page_out += "</div>";
-  page_out += "</div>";
-  page_out += "<label for='' id='l_currentTime' style='position:absolute;left:9px;top:173px;width:93px;height:19px;line-height:19px;z-index:4;'>Current Time:</label>";
-  page_out += "<div id='wb_t_currentTime' style='position:absolute;left:118px;top:177px;width:181px;height:19px;z-index:5;'>";
-  page_out += "<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>";
-  page_out += "<div>N/A</div>";
-  page_out += "</div>";
-  page_out += "</div>";
-  page_out += "</form>";
-  page_out += "</div>";
-  page_out += "<a href='/index'><input type='button' id='b_back' name='' value='Back' style='position:absolute;left:6px;top:218px;width:97px;height:26px;z-index:8;'></a>";
-  page_out += "<a href='/startManual'><input type='button' id='b_update' name='' value='Update' style='position:absolute;left:206px;top:218px;width:97px;height:26px;z-index:9;'></a>";
-  page_out += "</body>";
-  page_out += "</html>";
+	page_out += "<!doctype html>";
+	page_out += "<html>";
+	page_out += "<head>";
+	page_out += "<meta charset='utf-8'>";
+	page_out += "<title>Start Manual</title>";
+	page_out += "<style>";
+	page_out += "body";
+	page_out += "{";
+	page_out += "   background-color: #FFFFFF;";
+	page_out += "   color: #000000;";
+	page_out += "   font-family: Arial;";
+	page_out += "   font-weight: normal;";
+	page_out += "   font-size: 13px;";
+	page_out += "   line-height: 1.1875;";
+	page_out += "   margin: 0;";
+	page_out += "   padding: 0;";
+	page_out += "}";
+	page_out += "a";
+	page_out += "{";
+	page_out += "   color: #0000FF;";
+	page_out += "   text-decoration: underline;";
+	page_out += "}";
+	page_out += "a:visited";
+	page_out += "{";
+	page_out += "   color: #800080;";
+	page_out += "}";
+	page_out += "a:active";
+	page_out += "{";
+	page_out += "   color: #FF0000;";
+	page_out += "}";
+	page_out += "a:hover";
+	page_out += "{";
+	page_out += "   color: #0000FF;";
+	page_out += "   text-decoration: underline;";
+	page_out += "}";
+	page_out += "#wb_Form1";
+	page_out += "{";
+	page_out += "   background-color: #F4F4F4;";
+	page_out += "   background-image: none;";
+	page_out += "   border: 0px #000000 solid;";
+	page_out += "}";
+	page_out += "#b_irrigationOn";
+	page_out += "{";
+	page_out += "   border: 1px #2E6DA4 solid;";
+	page_out += "   -moz-border-radius: 4px;";
+	page_out += "   -webkit-border-radius: 4px;";
+	page_out += "   border-radius: 4px;";
+	page_out += "   background-color: #3370B7;";
+	page_out += "   background-image: none;";
+	page_out += "   color: #FFFFFF;";
+	page_out += "   font-family: Arial;";
+	page_out += "   font-weight: normal;";
+	page_out += "   font-size: 13px;";
+	page_out += "}";
+	page_out += "#b_stopIrrigation";
+	page_out += "{";
+	page_out += "   border: 1px #2E6DA4 solid;";
+	page_out += "   -moz-border-radius: 4px;";
+	page_out += "   -webkit-border-radius: 4px;";
+	page_out += "   border-radius: 4px;";
+	page_out += "   background-color: #3370B7;";
+	page_out += "   background-image: none;";
+	page_out += "   color: #FFFFFF;";
+	page_out += "   font-family: Arial;";
+	page_out += "   font-weight: normal;";
+	page_out += "   font-size: 13px;";
+	page_out += "}";
+	page_out += "#l_irrigationState";
+	page_out += "{";
+	page_out += "   border: 0px #CCCCCC solid;";
+	page_out += "   -moz-border-radius: 4px;";
+	page_out += "   -webkit-border-radius: 4px;";
+	page_out += "   border-radius: 4px;";
+	page_out += "   background-color: #FFFFFF;";
+	page_out += "   background-image: none;";
+	page_out += "   color :#000000;";
+	page_out += "   font-family: Arial;";
+	page_out += "   font-weight: normal;";
+	page_out += "   font-size: 13px;";
+	page_out += "   padding: 4px 4px 4px 4px;";
+	page_out += "   text-align: left;";
+	page_out += "   vertical-align: middle;";
+	page_out += "}";
+	page_out += "#wb_t_irrigationState";
+	page_out += "{";
+	page_out += "   background-color: transparent;";
+	page_out += "   background-image: none;";
+	page_out += "   border: 0px #C0C0C0 solid;";
+	page_out += "   padding: 0;";
+	page_out += "   margin: 0;";
+	page_out += "   text-align: left;";
+	page_out += "}";
+	page_out += "#wb_t_irrigationState div";
+	page_out += "{";
+	page_out += "   text-align: left;";
+	page_out += "}";
+	page_out += "#l_currentTime";
+	page_out += "{";
+	page_out += "   border: 0px #CCCCCC solid;";
+	page_out += "   -moz-border-radius: 4px;";
+	page_out += "   -webkit-border-radius: 4px;";
+	page_out += "   border-radius: 4px;";
+	page_out += "   background-color: #FFFFFF;";
+	page_out += "   background-image: none;";
+	page_out += "   color :#000000;";
+	page_out += "   font-family: Arial;";
+	page_out += "   font-weight: normal;";
+	page_out += "   font-size: 13px;";
+	page_out += "   padding: 4px 4px 4px 4px;";
+	page_out += "   text-align: left;";
+	page_out += "   vertical-align: middle;";
+	page_out += "}";
+	page_out += "#wb_t_currentTime";
+	page_out += "{";
+	page_out += "   background-color: transparent;";
+	page_out += "   background-image: none;";
+	page_out += "   border: 0px #C0C0C0 solid;";
+	page_out += "   padding: 0;";
+	page_out += "   margin: 0;";
+	page_out += "   text-align: left;";
+	page_out += "}";
+	page_out += "#wb_t_currentTime div";
+	page_out += "{";
+	page_out += "   text-align: left;";
+	page_out += "}";
+	page_out += "#b_back";
+	page_out += "{";
+	page_out += "   border: 1px #2E6DA4 solid;";
+	page_out += "   -moz-border-radius: 4px;";
+	page_out += "   -webkit-border-radius: 4px;";
+	page_out += "   border-radius: 4px;";
+	page_out += "   background-color: #3370B7;";
+	page_out += "   background-image: none;";
+	page_out += "   color: #FFFFFF;";
+	page_out += "   font-family: Arial;";
+	page_out += "   font-weight: normal;";
+	page_out += "   font-size: 13px;";
+	page_out += "}";
+	page_out += "#b_update";
+	page_out += "{";
+	page_out += "   border: 1px #2E6DA4 solid;";
+	page_out += "   -moz-border-radius: 4px;";
+	page_out += "   -webkit-border-radius: 4px;";
+	page_out += "   border-radius: 4px;";
+	page_out += "   background-color: #3370B7;";
+	page_out += "   background-image: none;";
+	page_out += "   color: #FFFFFF;";
+	page_out += "   font-family: Arial;";
+	page_out += "   font-weight: normal;";
+	page_out += "   font-size: 13px;";
+	page_out += "}";
+	page_out += "#wb_Form2";
+	page_out += "{";
+	page_out += "   background-color: #F4F4F4;";
+	page_out += "   background-image: none;";
+	page_out += "   border: 0px #000000 solid;";
+	page_out += "}";
+	page_out += "</style>";
+	page_out += "</head>";
+	page_out += "<body>";
+	page_out += "<div id='wb_Form1' style='position:absolute;left:0px;top:0px;width:305px;height:67px;z-index:3;'>";
+	page_out += "<form name='Form1' method='post' action='' enctype='text/plain' id='Form1'>";
+	page_out += "<input type='submit' id='b_irrigationOn' name='' value='Start Irrigation' style='position:absolute;left:69px;top:12px;width:151px;height:46px;z-index:0;'>";
+	page_out += "</form>";
+	page_out += "</div>";
+	page_out += "<label for='' id='l_irrigationState' style='position:absolute;left:15px;top:151px;width:93px;height:19px;line-height:19px;z-index:4;'>Irrigation State:</label>";
+	page_out += "<div id='wb_t_irrigationState' style='position:absolute;left:124px;top:155px;width:181px;height:19px;z-index:5;'>";
+	page_out += "<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>";
+	page_out += "<div>" + state_string + </div>";
+	page_out += "</div>";
+	page_out += "</div>";
+	page_out += "<label for='' id='l_currentTime' style='position:absolute;left:15px;top:183px;width:93px;height:19px;line-height:19px;z-index:6;'>Current Time:</label>";
+	page_out += "<div id='wb_t_currentTime' style='position:absolute;left:124px;top:187px;width:181px;height:19px;z-index:7;'>";
+	page_out += "<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>";
+	page_out += "<div>" + String(RTC.now().hour()) + ":" + String(RTC.now().minute()) + "</div>";
+	page_out += "</div>";
+	page_out += "</div>";
+	page_out += "<input type='button' id='b_back' name='' value='Back' style='position:absolute;left:6px;top:242px;width:97px;height:26px;z-index:8;'>";
+	page_out += "<input type='button' id='b_update' name='' value='Update' style='position:absolute;left:206px;top:242px;width:97px;height:26px;z-index:9;'>";
+	page_out += "<div id='wb_Form2' style='position:absolute;left:0px;top:67px;width:305px;height:67px;z-index:10;'>";
+	page_out += "<form name='Form2' method='post' action='' enctype='text/plain' id='Form2'>";
+	page_out += "<input type='submit' id='b_stopIrrigation' name='' value='Stop Irrigation' style='position:absolute;left:67px;top:12px;width:151px;height:46px;z-index:1;'>";
+	page_out += "</form>";
+	page_out += "</div>";
+	page_out += "</body>";
+	page_out += "</html>";
 
      server.send(200, "text/html", page_out); // Send a response to the client asking for input
   if (server.args() > 0 ) 
   { // Arguments were received
     for ( uint8_t i = 0; i < server.args(); i++ ) 
     {
-      Serial.print(server.argName(i)); // Display the argument
-      Argument_Name = server.argName(i);
-      if (server.argName(i) == "b_irrigationOn") 
+	   String Argument_Name = server.argName(i);
+	   String client_response = server.arg(i);
+	   Serial.print(Argument_Name); // Display the argument
+
+      if (Argument_Name == "b_irrigationOn") 
       {
-        Serial.print(" Input received was: ");
-        Serial.println(server.arg(i));
+        Serial.println(" b_irrigationOn ");
         state = STATE_FORCED_ON;
         // e.g. range_maximum = server.arg(i).toInt(); // use string.toInt() if you wanted to convert the input to an integer number
         // e.g. range_maximum = server.arg(i).toFloat(); // use string.toFloat() if you wanted to convert the input to a floating point number
      }
-      if (server.argName(i) == "b_stopIrrigation") 
+      if (Argument_Name == "b_stopIrrigation") 
       {
-        Serial.print(" Input received was: ");
-        Serial.println(server.arg(i));
+        Serial.println(" b_stopIrrigation ");
         state = STATE_OFF;
      }
     }
