@@ -109,6 +109,8 @@ void setup()
 void loop() 
 {
 
+  server.handleClient();
+
   switch(state)
   {
   case STATE_ON:
@@ -156,8 +158,6 @@ void loop()
     digitalWrite(relayPin, LOW);
     //Serial.println("STATE default -- relay off");
   }
-
-    server.handleClient();
 
 }
 
