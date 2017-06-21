@@ -132,15 +132,15 @@ void loop()
     if((start_time_min < current_time_min) && ((start_time_min + duration_min) > current_time_min))
     {
       digitalWrite(relayPin, LOW);
-      state_string = "STATE_ON - relay off";
+      state_string = "STATE_ON - relay on";
 
-     //Serial.println("STATE ON -- relay off");
+     //Serial.println("STATE ON -- relay on");
     }
     else
     {
       digitalWrite(relayPin, HIGH);
-      state_string = "STATE_ON - relay on";
-      //Serial.println("STATE ON -- relay on");
+      state_string = "STATE_ON - relay off";
+      //Serial.println("STATE ON -- relay off");
     }
   break;
   case STATE_OFF:
@@ -559,6 +559,8 @@ void page_set_start()
   page_out += "   line-height: 1.1875;";
   page_out += "   margin: 0;";
   page_out += "   padding: 0;";
+  page_out += "   min-height: 100%;";
+  page_out += "   width: 100%;";
   page_out += "}";
   page_out += "a";
   page_out += "{";
@@ -1003,13 +1005,13 @@ void page_start_manual()
 	page_out += "<body>";
 	page_out += "<div id='wb_Form1' style='position:absolute;left:0px;top:0px;width:305px;height:67px;z-index:3;'>";
 	page_out += "<form name='Form1' method='post' action='' enctype='text/plain' id='Form1'>";
-	page_out += "<input type='submit' id='b_irrigationOn' name='' value='Start Irrigation' style='position:absolute;left:69px;top:12px;width:151px;height:46px;z-index:0;'>";
+	page_out += "<input type='submit' id='b_irrigationOn' name='b_irrigationOn' value='Start Irrigation' style='position:absolute;left:69px;top:12px;width:151px;height:46px;z-index:0;'>";
 	page_out += "</form>";
 	page_out += "</div>";
 	page_out += "<label for='' id='l_irrigationState' style='position:absolute;left:15px;top:151px;width:93px;height:19px;line-height:19px;z-index:4;'>Irrigation State:</label>";
 	page_out += "<div id='wb_t_irrigationState' style='position:absolute;left:124px;top:155px;width:181px;height:19px;z-index:5;'>";
 	page_out += "<div style='font-family:Arial;font-size:13px;line-height:16px;color:#000000;'>";
-	page_out += "<div>" + state_string + </div>";
+	page_out += "<div>" + state_string + "</div>";
 	page_out += "</div>";
 	page_out += "</div>";
 	page_out += "<label for='' id='l_currentTime' style='position:absolute;left:15px;top:183px;width:93px;height:19px;line-height:19px;z-index:6;'>Current Time:</label>";
@@ -1018,11 +1020,11 @@ void page_start_manual()
 	page_out += "<div>" + String(RTC.now().hour()) + ":" + String(RTC.now().minute()) + "</div>";
 	page_out += "</div>";
 	page_out += "</div>";
-	page_out += "<input type='button' id='b_back' name='' value='Back' style='position:absolute;left:6px;top:242px;width:97px;height:26px;z-index:8;'>";
-	page_out += "<input type='button' id='b_update' name='' value='Update' style='position:absolute;left:206px;top:242px;width:97px;height:26px;z-index:9;'>";
+	page_out += "<a href='/index'><input type='button' id='b_back' name='' value='Back' style='position:absolute;left:6px;top:242px;width:97px;height:26px;z-index:8;'></a>";
+	page_out += "<a href='/startManual'><input type='button' id='b_update' name='' value='Update' style='position:absolute;left:206px;top:242px;width:97px;height:26px;z-index:9;'></a>";
 	page_out += "<div id='wb_Form2' style='position:absolute;left:0px;top:67px;width:305px;height:67px;z-index:10;'>";
 	page_out += "<form name='Form2' method='post' action='' enctype='text/plain' id='Form2'>";
-	page_out += "<input type='submit' id='b_stopIrrigation' name='' value='Stop Irrigation' style='position:absolute;left:67px;top:12px;width:151px;height:46px;z-index:1;'>";
+	page_out += "<input type='submit' id='b_stopIrrigation' name='b_stopIrrigation' value='Stop Irrigation' style='position:absolute;left:67px;top:12px;width:151px;height:46px;z-index:1;'>";
 	page_out += "</form>";
 	page_out += "</div>";
 	page_out += "</body>";
