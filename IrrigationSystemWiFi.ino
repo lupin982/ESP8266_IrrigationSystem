@@ -784,7 +784,7 @@ void page_set_start()
   page_out += "</head>";
   page_out += "<body>";
   page_out += "<div id='wb_Form1' style='position:absolute;left:0px;top:0px;width:316px;height:160px;z-index:8;'>";
-  page_out += "<form name='set_start' method=\"post\" action='/index' id='Form1'>";
+  page_out += "<form name='set_start' method=\"post\" action='' id='Form1'>";
   page_out += "<input type='text' id='le_startOre' style='position:absolute;left:96px;top:17px;width:190px;height:15px;line-height:15px;z-index:1;' name='le_startOre' value='' spellcheck='false' onchange='validateHh(this);'>";
   page_out += "<label for='le_startOre' id='l_startOre' style='position:absolute;left:17px;top:16px;width:73px;height:17px;line-height:17px;z-index:6;'>Start Ore</label>";
   page_out += "<input type='text' id='le_startMinuti' style='position:absolute;left:96px;top:49px;width:190px;height:15px;line-height:15px;z-index:4;' name='le_startMinuti' value='' spellcheck='false' onchange='validateMm(this);'>";
