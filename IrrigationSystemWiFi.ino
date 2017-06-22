@@ -172,6 +172,7 @@ void page_get_info()
   page_out += "<!doctype html>";
   page_out += "<html>";
   page_out += "<head>";
+  page_out += "<meta name='viewport' content='width=device-width'>";
   page_out += "<meta charset='utf-8'>";
   page_out += "<title>Get Info</title>";
   page_out += "<style>";
@@ -448,6 +449,7 @@ void page_index()
   page_out += "<!doctype html>";
   page_out += "<html>";
   page_out += "<head>";
+  page_out += "<meta name='viewport' content='width=device-width'>";  
   page_out += "<meta charset='utf-8'>";
   page_out += "<title>Untitled Page</title>";
   page_out += "<meta name='generator' content='Quick 'n Easy Web Builder - http://www.quickandeasywebbuilder.com'>";
@@ -546,6 +548,7 @@ void page_set_start()
   page_out += "<!doctype html>";
   page_out += "<html>";
   page_out += "<head>";
+  page_out += "<meta name='viewport' content='width=device-width'>";  
   page_out += "<meta charset='utf-8'>";
   page_out += "<title>Set Start</title>";
   page_out += "<style>";
@@ -781,14 +784,14 @@ void page_set_start()
   page_out += "</head>";
   page_out += "<body>";
   page_out += "<div id='wb_Form1' style='position:absolute;left:0px;top:0px;width:316px;height:160px;z-index:8;'>";
-  page_out += "<form name='set_start' method='post' action='' enctype='text/plain' id='Form1'>";
-  page_out += "<label for='le_startMinuti' id='l_statMinuti' style='position:absolute;left:13px;top:50px;width:73px;height:17px;line-height:17px;z-index:0;'>Start Minuti</label>";
+  page_out += "<form name='set_start' method=\"post\" action='/index' enctype='text/plain' id='Form1'>";
   page_out += "<input type='text' id='le_startOre' style='position:absolute;left:96px;top:17px;width:190px;height:15px;line-height:15px;z-index:1;' name='le_startOre' value='' spellcheck='false' onchange='validateHh(this);'>";
-  page_out += "<label for='le_durata' id='l_durata' style='position:absolute;left:10px;top:82px;width:73px;height:17px;line-height:17px;z-index:2;'>Durata (min)</label>";
-  page_out += "<input type='text' id='le_durata' style='position:absolute;left:96px;top:82px;width:190px;height:15px;line-height:15px;z-index:3;' name='le_durata' value='' spellcheck='false' onchange='validateDurata(this);'>";
-  page_out += "<input type='text' id='le_startMinuti' style='position:absolute;left:96px;top:49px;width:190px;height:15px;line-height:15px;z-index:4;' name='le_startMinuti' value='' spellcheck='false' onchange='validateMm(this);'>";
-  page_out += "<input type='submit' id='b_set' name='' value='Set' style='position:absolute;left:202px;top:121px;width:97px;height:26px;z-index:5;'>";
   page_out += "<label for='le_startOre' id='l_startOre' style='position:absolute;left:17px;top:16px;width:73px;height:17px;line-height:17px;z-index:6;'>Start Ore</label>";
+  page_out += "<input type='text' id='le_startMinuti' style='position:absolute;left:96px;top:49px;width:190px;height:15px;line-height:15px;z-index:4;' name='le_startMinuti' value='' spellcheck='false' onchange='validateMm(this);'>";
+  page_out += "<label for='le_startMinuti' id='l_statMinuti' style='position:absolute;left:13px;top:50px;width:73px;height:17px;line-height:17px;z-index:0;'>Start Minuti</label>";
+  page_out += "<input type='text' id='le_durata' style='position:absolute;left:96px;top:82px;width:190px;height:15px;line-height:15px;z-index:3;' name='le_durata' value='' spellcheck='false' onchange='validateDurata(this);'>";
+  page_out += "<label for='le_durata' id='l_durata' style='position:absolute;left:10px;top:82px;width:73px;height:17px;line-height:17px;z-index:2;'>Durata (min)</label>";
+  page_out += "<input type='submit' id='b_set' name='' value='Set' style='position:absolute;left:202px;top:121px;width:97px;height:26px;z-index:5;'>";
   page_out += "</form>";
   page_out += "</div>";
   page_out += "<a href='/index'><input type='button' id='b_back' name='' value='Back' style='position:absolute;left:12px;top:169px;width:97px;height:26px;z-index:9;'></a>";
@@ -846,6 +849,7 @@ void page_start_manual()
 	page_out += "<!doctype html>";
 	page_out += "<html>";
 	page_out += "<head>";
+    page_out += "<meta name='viewport' content='width=device-width'>";	
 	page_out += "<meta charset='utf-8'>";
 	page_out += "<title>Start Manual</title>";
 	page_out += "<style>";
